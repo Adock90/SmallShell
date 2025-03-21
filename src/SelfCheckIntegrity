@@ -2,94 +2,26 @@
 
 orignal='#!/bin/bash
 
+echo "Starting Services"
 
-	function StartServicer(){
-	
-		echo "Starting Services"
+userName=$(whoami)
+direct=$PWD
 
-		userName=$(whoami)
-		direct=$PWD
-		FormatColour=$(tput setaf 4)
-		UserColour=$(tput setaf 3)
-		DirectColour=$(tput setaf 2)
-		ErrorColour=$(tput setaf 1)
-		NormColour=$(tput sgr0)
-		
-		echo "Starting SmallShell"
-		
-		sleep 1
+echo "Starting SmallShell(sS)"
 
-		clear
-	}
+sleep 1
 
-	function StopServicer(){
-		sleep 1
-	
-		clear
+clear
 
-		echo "Stopping SmallShell"
+sleep 1
 
-		echo "Stopping Services"
-		userName=""
-		direct=""
-		FormatColour=""
-		UserColour=""
-		DirectColour=""
-		NormColour=""
-
-		echo "Killing ServicerProcces"
-		echo "bye"
-		sleep 1
-		clear
-		exit
-	}
-
-	function RestartServicer(){
-	        sleep 1
-
-        	clear
-
-	        echo "Stopping SmallShell"
-
-	        echo "Stopping Services"
-	        userName=""
-	        direct=""
-	        FormatColour=""
-	        UserColour=""
-	        DirectColour=""
-	        NormColour=""
-
-	        echo "Killing ServicerProcces"
-	        echo "bye"
-	        sleep 1
-		clear
-		StartServicer
-	}
-
-
-	StartServicer
-
-
-	sleep 1
-
-	while [ 1 ];
-	do
-		printf "${UserColour}$userName${FormatColour}@SmallShell${NormColour}:${DirectColour}$direct&&${NormColour} "
-		read Command
-		if [ $Command == "leave" ];
-		then
-			StopServicer
-		elif [ $Command == "restart" ];
-		then
-			RestartServicer
-		elif [ $Command == "exit" ]
-		then
-			echo "${ErrorColour}This Command Will not work in SmallShell. Type {leave} instead${NormColour}"
-		else 
-			$Command
-		fi
-		direct=$PWD
-	done'
+while [ 1 ];
+do
+	printf "$userName@SmallShell:$direct&& "
+	read Command
+	$Command
+	direct=$PWD
+done'
 CheckFile="./sS"
 
 FileCheck=$(cat $CheckFile)
