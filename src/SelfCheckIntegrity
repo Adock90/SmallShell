@@ -1,38 +1,12 @@
 #!/bin/bash
 
-orignal='#!/bin/bash
+arg=$1
 
-echo "Starting Services"
-
-userName=$(whoami)
-direct=$PWD
-
-echo "Starting SmallShell(sS)"
-
-sleep 1
-
-clear
-
-sleep 1
-
-while [ 1 ];
-do
-	printf "$userName@SmallShell:$direct&& "
-	read Command
-	$Command
-	direct=$PWD
-done'
-CheckFile="./sS"
-
-FileCheck=$(cat $CheckFile)
-
-if [ $FileCheck == $original ];
+if [ $arg == "restore" ];
 then
-	echo okay
-	exit
-else
-	echo not okay overwriting
-	echo $original >> $FileCheck
-	echo "finished"
+	url="blob:https://github.com/7c95ca22-3e82-44b5-bbad-7bbf1e28170c"	
+	wget --v
+	echo wiping
+	rm ./sS2.0
+	curl "$url -o ./sS2.0"
 fi
-
