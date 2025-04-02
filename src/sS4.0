@@ -1,0 +1,130 @@
+#!/bin/bash
+
+
+function StartServicer(){
+
+	echo "Starting Services"
+
+	userName=$(whoami)
+	direct=$PWD
+	FormatColour=$(tput setaf 4)
+	UserColour=$(tput setaf 3)
+	DirectColour=$(tput setaf 2)
+	ErrorColour=$(tput setaf 1)
+	NormColour=$(tput sgr0)
+	CommandArr=("./sS")
+	CommandIndexPos=0
+
+	trap '' SIGINT
+
+	echo "Starting SmallShell"
+	
+	sleep 1
+
+	clear
+	
+}
+
+function StopServicer(){
+	sleep 1
+	
+	clear
+
+	echo "Stopping SmallShell"
+
+	echo "Stopping Services"
+	userName=""
+	direct=""
+	FormatColour=""
+	UserColour=""
+	DirectColour=""
+	NormColour=""
+	CommandArr=()
+	CommandIndexPos=0
+
+	trap - SIGINT
+
+	echo "Killing ServicerProcces"
+	echo "bye"
+	sleep 1
+	clear
+	exit
+}
+
+function RestartServicer(){
+        sleep 1
+
+        clear
+
+        echo "Stopping SmallShell"
+
+        echo "Stopping Services"
+        userName=""
+        direct=""
+        FormatColour=""
+        UserColour=""
+        DirectColour=""
+        NormColour=""
+	Command=()
+	CommandIndexPos=0
+	
+	trap - SIGINT
+
+        echo "Killing ServicerProcces"
+        echo "bye"
+        sleep 1
+	clear
+	StartServicer
+}
+
+
+StartServicer
+
+
+sleep 1
+
+while [ 1 ];
+do
+	if [ "$direct" == "home\$userLog" ];
+	then
+		direct="~"
+		printf "${UserColour}$userName${FormatColour}@SmallShell${NormColour}:${DirectColour}$direct&&${NormColour} "
+	else
+		printf "${UserColour}$userName${FormatColour}@SmallShell${NormColour}:${DirectColour}$direct&&${NormColour} "
+	fi
+	read Command
+
+	if [ "$Command" == "leave" ];
+	then
+		StopServicer
+	elif [ "$Command" == "restart" ];
+	then
+		RestartServicer
+	elif [ "$Command" == "exit" ];
+	then
+		echo "${ErrorColour}This Command Will not work in SmallShell. Type {leave} instead${NormColour}"
+	elif [ "$Command" == "^[[A" ];
+	then
+		printf $CommandArr[-1]
+	elif [ "$Command" == "kill BashTerminal" ];
+	then
+		echo "Stopping SmallShell"
+
+        	echo "Stopping Services"
+        	userName=""
+        	direct=""
+        	FormatColour=""
+        	UserColour=""
+        	DirectColour=""
+        	NormColour=""
+        	CommandArr=()
+        	CommandIndexPos=0
+
+       		 trap - SIGINT
+
+		$(kill -9 $PPID)
+	else 
+		$Command
+	fi
+	direct=$PWD
+done
